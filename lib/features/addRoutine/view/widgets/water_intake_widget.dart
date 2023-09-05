@@ -7,7 +7,11 @@ import '../../../../core/theme/app_colors.dart';
 import '../../view_model/add_routine_view_model.dart';
 
 class WaterIntakeWidget extends StatelessWidget {
-  const WaterIntakeWidget({super.key});
+  const WaterIntakeWidget({
+    super.key,
+    this.waterPercentage,
+  });
+  final int? waterPercentage;
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +43,12 @@ class WaterIntakeWidget extends StatelessWidget {
                     Consumer<AddRoutineViewModel>(
                         builder: (context, viewModel, _) {
                       return Expanded(
-                        flex: 10 + 90 * viewModel.waterPercentage ~/ 100,
+                        flex: 10 +
+                            90 *
+                                (waterPercentage != null
+                                    ? waterPercentage!
+                                    : viewModel.waterPercentage) ~/
+                                100,
                         child: ClipRRect(
                           borderRadius: BorderRadius.only(
                             bottomLeft: Radius.circular(8),
@@ -88,8 +97,13 @@ class WaterIntakeWidget extends StatelessWidget {
                     Consumer<AddRoutineViewModel>(
                         builder: (context, viewModel, _) {
                       return Expanded(
-                          flex:
-                              10 + 90 * (90 - viewModel.waterPercentage) ~/ 100,
+                          flex: 10 +
+                              90 *
+                                  (90 -
+                                      (waterPercentage != null
+                                          ? waterPercentage!
+                                          : viewModel.waterPercentage)) ~/
+                                  100,
                           child: Container());
                     })
                   ],
@@ -99,7 +113,7 @@ class WaterIntakeWidget extends StatelessWidget {
                 return Positioned(
                   left: 8,
                   child: Text(
-                    "${viewModel.waterPercentage}%",
+                    "${waterPercentage != null ? waterPercentage! : viewModel.waterPercentage}%",
                     style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                           color: whiteColor,
                           fontWeight: FontWeight.bold,
@@ -120,59 +134,61 @@ class WaterIntakeWidget extends StatelessWidget {
             ],
           ),
         ),
-        Padding(
-          padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              ElevatedButton(
-                style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.resolveWith(
-                    (states) => primaryColor,
-                  ),
-                  shape: MaterialStateProperty.resolveWith(
-                    (states) => RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(
-                        12,
+        waterPercentage != null
+            ? Container()
+            : Padding(
+                padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    ElevatedButton(
+                      style: ButtonStyle(
+                        backgroundColor: MaterialStateProperty.resolveWith(
+                          (states) => primaryColor,
+                        ),
+                        shape: MaterialStateProperty.resolveWith(
+                          (states) => RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(
+                              12,
+                            ),
+                          ),
+                        ),
+                      ),
+                      onPressed: () {
+                        Provider.of<AddRoutineViewModel>(context, listen: false)
+                            .changeWaterIntake(isAdd: false);
+                      },
+                      child: const Icon(
+                        Icons.remove,
                       ),
                     ),
-                  ),
-                ),
-                onPressed: () {
-                  Provider.of<AddRoutineViewModel>(context, listen: false)
-                      .changeWaterIntake(isAdd: false);
-                },
-                child: const Icon(
-                  Icons.remove,
-                ),
-              ),
-              const SizedBox(
-                width: 24,
-              ),
-              ElevatedButton(
-                style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.resolveWith(
-                    (states) => primaryColor,
-                  ),
-                  shape: MaterialStateProperty.resolveWith(
-                    (states) => RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(
-                        12,
+                    const SizedBox(
+                      width: 24,
+                    ),
+                    ElevatedButton(
+                      style: ButtonStyle(
+                        backgroundColor: MaterialStateProperty.resolveWith(
+                          (states) => primaryColor,
+                        ),
+                        shape: MaterialStateProperty.resolveWith(
+                          (states) => RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(
+                              12,
+                            ),
+                          ),
+                        ),
+                      ),
+                      onPressed: () {
+                        Provider.of<AddRoutineViewModel>(context, listen: false)
+                            .changeWaterIntake(isAdd: true);
+                      },
+                      child: const Icon(
+                        Icons.add,
                       ),
                     ),
-                  ),
+                  ],
                 ),
-                onPressed: () {
-                  Provider.of<AddRoutineViewModel>(context, listen: false)
-                      .changeWaterIntake(isAdd: true);
-                },
-                child: const Icon(
-                  Icons.add,
-                ),
-              ),
-            ],
-          ),
-        )
+              )
       ],
     );
   }

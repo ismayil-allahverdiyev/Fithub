@@ -4,7 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class SleepWidget extends StatelessWidget {
-  const SleepWidget({super.key});
+  const SleepWidget({
+    super.key,
+    this.sleepHours,
+  });
+  final double? sleepHours;
 
   @override
   Widget build(BuildContext context) {
@@ -20,16 +24,20 @@ class SleepWidget extends StatelessWidget {
         ),
         Consumer<AddRoutineViewModel>(builder: (context, viewModel, _) {
           return Slider.adaptive(
-            value: viewModel.amountOfSleep,
+            value: sleepHours != null ? sleepHours! : viewModel.amountOfSleep,
             max: 12,
             min: 0,
             divisions: 12,
-            label: viewModel.amountOfSleep.toInt().toString(),
+            label: sleepHours != null
+                ? sleepHours!.toInt().toString()
+                : viewModel.amountOfSleep.toInt().toString(),
             activeColor: primaryColor,
             secondaryTrackValue: 7,
             inactiveColor: lightPrimaryColor.withOpacity(0.2),
             onChanged: (value) {
-              viewModel.changeAmountOfSleep(amount: value);
+              sleepHours != null
+                  ? null
+                  : viewModel.changeAmountOfSleep(amount: value);
             },
           );
         }),

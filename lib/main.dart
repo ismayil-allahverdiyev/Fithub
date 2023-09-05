@@ -1,6 +1,8 @@
 import 'package:fithub/core/routes/routes.dart';
 import 'package:fithub/core/theme/theme.dart';
 import 'package:fithub/features/addRoutine/view/add_routine.dart';
+import 'package:fithub/features/display/view/display_routine_view.dart';
+import 'package:fithub/features/homepage/model/day_model.dart';
 import 'package:fithub/features/homepage/view_model.dart/home_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -17,9 +19,16 @@ void main() {
       ],
       child: MaterialApp(
         theme: appThemeData,
-        routes: {
-          '/': (context) => const HomePage(),
-          Routes.addRoutine: (context) => const AddRoutine(),
+        onGenerateRoute: (RouteSettings settings) {
+          print('build route for ${settings.name}');
+          var routes = <String, WidgetBuilder>{
+            '/': (context) => const HomePage(),
+            Routes.addRoutine: (context) => const AddRoutine(),
+            Routes.displayRoutine: (context) =>
+                DisplayRoutineView(dayModel: settings.arguments as DayModel),
+          };
+          WidgetBuilder builder = routes[settings.name]!;
+          return MaterialPageRoute(builder: (ctx) => builder(ctx));
         },
       ),
     ),

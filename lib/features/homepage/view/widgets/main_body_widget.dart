@@ -1,3 +1,4 @@
+import 'package:fithub/core/routes/routes.dart';
 import 'package:fithub/core/theme/app_colors.dart';
 import 'package:fithub/core/theme/assets.dart';
 import 'package:fithub/features/homepage/view_model.dart/home_view_model.dart';
@@ -19,83 +20,89 @@ class MainBody extends StatelessWidget {
         itemBuilder: (context, index) {
           return Padding(
             padding: const EdgeInsets.fromLTRB(4, 2, 5, 2),
-            child: Card(
-              elevation: 8,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(8),
-              ),
-              child: Row(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          DateFormat.MMMMd()
-                              .format(viewModel.listOfDays[index].date)
-                              .split(" ")[1],
-                          style: Theme.of(context).textTheme.displayMedium,
-                        ),
-                        Text(
-                          DateFormat.MMMMd()
-                              .format(viewModel.listOfDays[index].date)
-                              .split(" ")[0],
-                          style: Theme.of(context).textTheme.displaySmall,
-                        )
-                      ],
+            child: GestureDetector(
+              onTap: () {
+                Navigator.pushNamed(context, Routes.displayRoutine,
+                    arguments: viewModel.listOfDays[index]);
+              },
+              child: Card(
+                elevation: 8,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Row(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            DateFormat.MMMMd()
+                                .format(viewModel.listOfDays[index].date)
+                                .split(" ")[1],
+                            style: Theme.of(context).textTheme.displayMedium,
+                          ),
+                          Text(
+                            DateFormat.MMMMd()
+                                .format(viewModel.listOfDays[index].date)
+                                .split(" ")[0],
+                            style: Theme.of(context).textTheme.displaySmall,
+                          )
+                        ],
+                      ),
                     ),
-                  ),
-                  Expanded(
-                    child: Column(
-                      children: [
-                        PercentIndicatorWidget(
-                          index: 0,
-                          percentage: viewModel.listOfDays[index].waterIntake,
-                        ),
-                        SizedBox(
-                          height: 8,
-                        ),
-                        PercentIndicatorWidget(
-                          index: 1,
-                          percentage: viewModel.listOfDays[index].sleepHours,
-                        ),
-                        SizedBox(
-                          height: 8,
-                        ),
-                        PercentIndicatorWidget(
-                          index: 2,
-                          percentage: 60,
-                        ),
-                        SizedBox(
-                          height: 8,
-                        ),
-                        PercentIndicatorWidget(
-                          index: 3,
-                          percentage: 72,
-                        ),
-                      ],
+                    Expanded(
+                      child: Column(
+                        children: [
+                          PercentIndicatorWidget(
+                            index: 0,
+                            percentage: viewModel.listOfDays[index].waterIntake,
+                          ),
+                          SizedBox(
+                            height: 8,
+                          ),
+                          PercentIndicatorWidget(
+                            index: 1,
+                            percentage: viewModel.listOfDays[index].sleepHours,
+                          ),
+                          SizedBox(
+                            height: 8,
+                          ),
+                          PercentIndicatorWidget(
+                            index: 2,
+                            percentage: 60,
+                          ),
+                          SizedBox(
+                            height: 8,
+                          ),
+                          PercentIndicatorWidget(
+                            index: 3,
+                            percentage: 72,
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(15, 0, 12, 0),
-                    child: Column(
-                      children: [
-                        Text(
-                          "72%",
-                          style: Theme.of(context).textTheme.titleSmall,
-                        ),
-                        const SizedBox(
-                          height: 24,
-                        ),
-                        Image.asset(
-                          Assets.icon_trash,
-                          scale: 2,
-                        ),
-                      ],
-                    ),
-                  )
-                ],
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(15, 0, 12, 0),
+                      child: Column(
+                        children: [
+                          Text(
+                            "72%",
+                            style: Theme.of(context).textTheme.titleSmall,
+                          ),
+                          const SizedBox(
+                            height: 24,
+                          ),
+                          Image.asset(
+                            Assets.icon_trash,
+                            scale: 2,
+                          ),
+                        ],
+                      ),
+                    )
+                  ],
+                ),
               ),
             ),
           );

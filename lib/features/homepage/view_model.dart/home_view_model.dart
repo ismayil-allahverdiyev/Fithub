@@ -5,6 +5,9 @@ import '../../../core/utils/sql_helper.dart';
 import '../model/day_model.dart';
 
 class HomeViewModel extends ChangeNotifier {
+  HomeViewModel() {
+    updateListOfDays();
+  }
   var date = DateFormat.MMMMd().format(DateTime.now());
 
   List<DayModel> listOfDays = [];

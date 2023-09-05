@@ -7,11 +7,14 @@ import 'package:provider/provider.dart';
 
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/assets.dart';
+import '../../model/plan_model.dart';
 
 class PlanListWidget extends StatelessWidget {
   const PlanListWidget({
     super.key,
+    this.planList,
   });
+  final List<PlanModel>? planList;
 
   @override
   Widget build(BuildContext context) {
@@ -36,10 +39,15 @@ class PlanListWidget extends StatelessWidget {
                 Consumer<AddRoutineViewModel>(builder: (context, viewModel, _) {
               return ListView.separated(
                 shrinkWrap: true,
-                itemCount: viewModel.planList.length,
+                itemCount: planList != null
+                    ? planList!.length
+                    : viewModel.planList.length,
                 itemBuilder: (context, index) {
                   return ListComponentWidget(
-                    index: index,
+                    index: planList != null ? null : index,
+                    planModel: planList != null
+                        ? planList![index]
+                        : viewModel.planList[index],
                   );
                 },
                 separatorBuilder: (context, index) {
@@ -179,8 +187,9 @@ Future<dynamic> customBottomSheet({
 }
 
 class ListComponentWidget extends StatelessWidget {
-  const ListComponentWidget({super.key, required this.index});
-  final int index;
+  const ListComponentWidget({super.key, required this.planModel, this.index});
+  final PlanModel planModel;
+  final int? index;
 
   @override
   Widget build(BuildContext context) {
@@ -194,11 +203,11 @@ class ListComponentWidget extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "${viewModel.planList[index].timeOfDay.hour}:${viewModel.planList[index].timeOfDay.minute} ${viewModel.planList[index].timeOfDay.period.name}",
+                    "${planModel.timeOfDay.hour}:${planModel.timeOfDay.minute} ${planModel.timeOfDay.period.name}",
                     style: Theme.of(context).textTheme.bodySmall,
                   ),
                   Text(
-                    viewModel.planList[index].title,
+                    planModel.title,
                     overflow: TextOverflow.ellipsis,
                     style: Theme.of(context).textTheme.bodyMedium,
                   ),
@@ -206,36 +215,38 @@ class ListComponentWidget extends StatelessWidget {
               ),
             ),
           ),
-          Row(
-            children: [
-              InkWell(
-                onTap: () {
-                  viewModel.prepareTheBottomSheet(index: index);
-                  customBottomSheet(
-                      context: context, isEdit: true, index: index);
-                },
-                child: Image.asset(
-                  Assets.icon_edit,
-                  scale: 1.5,
-                ),
-              ),
-              SizedBox(
-                width: 12,
-              ),
-              InkWell(
-                onTap: () {
-                  viewModel.deleteFromTheList(index: index);
-                },
-                child: Image.asset(
-                  Assets.icon_trash2,
-                  scale: 1.5,
-                ),
-              ),
-              SizedBox(
-                width: 8,
-              ),
-            ],
-          )
+          index == null
+              ? Container()
+              : Row(
+                  children: [
+                    InkWell(
+                      onTap: () {
+                        viewModel.prepareTheBottomSheet(index: index!);
+                        customBottomSheet(
+                            context: context, isEdit: true, index: index);
+                      },
+                      child: Image.asset(
+                        Assets.icon_edit,
+                        scale: 1.5,
+                      ),
+                    ),
+                    SizedBox(
+                      width: 12,
+                    ),
+                    InkWell(
+                      onTap: () {
+                        viewModel.deleteFromTheList(index: index!);
+                      },
+                      child: Image.asset(
+                        Assets.icon_trash2,
+                        scale: 1.5,
+                      ),
+                    ),
+                    SizedBox(
+                      width: 8,
+                    ),
+                  ],
+                )
         ],
       );
     });

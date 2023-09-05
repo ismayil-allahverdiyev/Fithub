@@ -7,7 +7,9 @@ import '../../../../core/theme/theme.dart';
 class CalendarWidget extends StatelessWidget {
   const CalendarWidget({
     super.key,
+    this.date,
   });
+  final DateTime? date;
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +23,7 @@ class CalendarWidget extends StatelessWidget {
       child: Consumer<AddRoutineViewModel>(
         builder: (context, viewModel, _) {
           return CalendarDatePicker(
-            initialDate: DateTime.now(),
+            initialDate: date != null ? date! : DateTime.now(),
             firstDate: DateTime(DateTime.now().year - 1, 1, 1),
             lastDate: DateTime(DateTime.now().year + 1, 12, 31),
             onDateChanged: (value) {

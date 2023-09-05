@@ -1,5 +1,6 @@
 import 'package:fithub/core/theme/app_colors.dart';
 import 'package:fithub/features/addRoutine/view_model/add_routine_view_model.dart';
+import 'package:fithub/features/display/view_model/display_routine_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../../core/theme/assets.dart';
@@ -7,7 +8,9 @@ import '../../../../core/theme/assets.dart';
 class MoodSelector extends StatelessWidget {
   const MoodSelector({
     super.key,
+    this.selectedMood,
   });
+  final int? selectedMood;
 
   @override
   Widget build(BuildContext context) {
@@ -28,37 +31,49 @@ class MoodSelector extends StatelessWidget {
               children: [
                 GestureDetector(
                   onTap: () {
-                    viewModel.selectedMood = 0;
+                    if (selectedMood == null) viewModel.selectedMood = 0;
                   },
                   child: Image.asset(
                     Assets.icon_emoji_sad,
-                    color: viewModel.selectedMood == 0
-                        ? selectedYellowColor
-                        : null,
+                    color: selectedMood != null
+                        ? selectedMood == 0
+                            ? selectedYellowColor
+                            : null
+                        : viewModel.selectedMood == 0
+                            ? selectedYellowColor
+                            : null,
                     scale: 2,
                   ),
                 ),
                 GestureDetector(
                   onTap: () {
-                    viewModel.selectedMood = 1;
+                    if (selectedMood == null) viewModel.selectedMood = 1;
                   },
                   child: Image.asset(
                     Assets.icon_emoji_normal,
-                    color: viewModel.selectedMood == 1
-                        ? selectedYellowColor
-                        : null,
+                    color: selectedMood != null
+                        ? selectedMood == 1
+                            ? selectedYellowColor
+                            : null
+                        : viewModel.selectedMood == 1
+                            ? selectedYellowColor
+                            : null,
                     scale: 2,
                   ),
                 ),
                 GestureDetector(
                   onTap: () {
-                    viewModel.selectedMood = 2;
+                    if (selectedMood == null) viewModel.selectedMood = 2;
                   },
                   child: Image.asset(
                     Assets.icon_emoji_happy,
-                    color: viewModel.selectedMood == 2
-                        ? selectedYellowColor
-                        : null,
+                    color: selectedMood != null
+                        ? selectedMood == 2
+                            ? selectedYellowColor
+                            : null
+                        : viewModel.selectedMood == 2
+                            ? selectedYellowColor
+                            : null,
                     scale: 2,
                   ),
                 ),
