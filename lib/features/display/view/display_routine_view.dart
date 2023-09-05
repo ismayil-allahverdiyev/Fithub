@@ -1,7 +1,5 @@
 import 'package:fithub/features/homepage/model/day_model.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/assets.dart';
 import '../../addRoutine/view/widgets/calendar_widget.dart';
@@ -9,7 +7,6 @@ import '../../addRoutine/view/widgets/mood_selector.dart';
 import '../../addRoutine/view/widgets/plan_list_widget.dart';
 import '../../addRoutine/view/widgets/sleep_widget.dart';
 import '../../addRoutine/view/widgets/water_intake_widget.dart';
-import '../../homepage/view_model.dart/home_view_model.dart';
 
 class DisplayRoutineView extends StatelessWidget {
   const DisplayRoutineView({

@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:fithub/features/addRoutine/model/plan_model.dart';
-import 'package:flutter/material.dart';
 
 DayModel dayModelFromJson(String str) => DayModel.fromJson(json.decode(str));
 

@@ -1,8 +1,5 @@
-import 'dart:convert';
-
 import 'package:fithub/core/utils/sql_helper.dart';
 import 'package:fithub/features/addRoutine/model/plan_model.dart';
-import 'package:fithub/features/homepage/model/day_model.dart';
 import 'package:flutter/material.dart';
 
 class AddRoutineViewModel extends ChangeNotifier {

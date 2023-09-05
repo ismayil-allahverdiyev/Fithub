@@ -1,4 +1,3 @@
-import 'package:fithub/core/utils/utils.dart';
 import 'package:fithub/features/addRoutine/view/widgets/time_selector_widget.dart';
 import 'package:fithub/features/addRoutine/view_model/add_routine_view_model.dart';
 import 'package:fithub/features/commonWidgets/custom_text_field.dart';
@@ -51,7 +50,7 @@ class PlanListWidget extends StatelessWidget {
                   );
                 },
                 separatorBuilder: (context, index) {
-                  return Divider(
+                  return const Divider(
                     thickness: 2,
                   );
                 },

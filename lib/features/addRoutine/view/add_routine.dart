@@ -1,6 +1,5 @@
 import 'package:fithub/core/theme/app_colors.dart';
 import 'package:fithub/core/theme/assets.dart';
-import 'package:fithub/core/theme/theme.dart';
 import 'package:fithub/features/addRoutine/view/widgets/plan_list_widget.dart';
 import 'package:fithub/features/addRoutine/view/widgets/sleep_widget.dart';
 import 'package:fithub/features/addRoutine/view/widgets/water_intake_widget.dart';
@@ -8,9 +7,6 @@ import 'package:fithub/features/addRoutine/view_model/add_routine_view_model.dar
 import 'package:fithub/features/homepage/view_model.dart/home_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:wave/config.dart';
-import 'package:wave/wave.dart';
-
 import 'widgets/calendar_widget.dart';
 import 'widgets/mood_selector.dart';
 
@@ -35,24 +31,26 @@ class AddRoutine extends StatelessWidget {
       ),
       body: ListView(
         children: [
-          CalendarWidget(),
-          MoodSelector(),
-          PlanListWidget(),
-          WaterIntakeWidget(),
-          SleepWidget(),
-          Consumer<HomeViewModel>(builder: (context, viewModel, _) {
-            return ElevatedButton(
-              onPressed: () {
-                Navigator.pop(context);
-                Provider.of<AddRoutineViewModel>(context, listen: false)
-                    .addRoutine()
-                    .then((value) {
-                  viewModel.updateListOfDays();
-                });
-              },
-              child: const Text("Add"),
-            );
-          })
+          const CalendarWidget(),
+          const MoodSelector(),
+          const PlanListWidget(),
+          const WaterIntakeWidget(),
+          const SleepWidget(),
+          Consumer<HomeViewModel>(
+            builder: (context, viewModel, _) {
+              return ElevatedButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                  Provider.of<AddRoutineViewModel>(context, listen: false)
+                      .addRoutine()
+                      .then((value) {
+                    viewModel.updateListOfDays();
+                  });
+                },
+                child: const Text("Add"),
+              );
+            },
+          )
         ],
       ),
     );

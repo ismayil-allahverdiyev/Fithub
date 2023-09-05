@@ -11,7 +11,6 @@ class MainBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var width = MediaQuery.of(context).size.width;
     return Consumer<HomeViewModel>(builder: (context, viewModel, _) {
       return ListView.builder(
         physics: const NeverScrollableScrollPhysics(),
