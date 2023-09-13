@@ -1,8 +1,14 @@
 import 'package:fithub/core/utils/sql_helper.dart';
+import 'package:fithub/features/addRoutine/model/date_model.dart';
 import 'package:fithub/features/addRoutine/model/plan_model.dart';
 import 'package:flutter/material.dart';
 
 class AddRoutineViewModel extends ChangeNotifier {
+  AddRoutineViewModel() {
+    getCalendarDate();
+  }
+
+  // Mood selector
   int _selectedMood = 0;
   int get selectedMood => _selectedMood;
   set selectedMood(int value) {
@@ -10,13 +16,20 @@ class AddRoutineViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  // Water selector
   int waterPercentage = 0;
+
+  // Sleep selector
   double amountOfSleep = 0;
+
+  // Date selector
   DateTime selectedDate = DateTime.now();
 
   TimeOfDay? selectedTime = const TimeOfDay(hour: 0, minute: 0);
 
   List<PlanModel> planList = [];
+
+  List<DateModel> dateList = [];
 
   TextEditingController planController = TextEditingController();
 
@@ -79,7 +92,7 @@ class AddRoutineViewModel extends ChangeNotifier {
   }
 
   addRoutine() async {
-    SQLHelper.createItem(
+    SQLHelper.createItemInPlans(
       date: selectedDate.microsecondsSinceEpoch,
       mood: selectedMood,
       planList: [
@@ -88,5 +101,14 @@ class AddRoutineViewModel extends ChangeNotifier {
       sleepHours: amountOfSleep.toInt(),
       waterIntake: waterPercentage,
     );
+  }
+
+  getCalendarDate() async {
+    var response = await SQLHelper.getItems("dates");
+    print(response[0]);
+    response.forEach((element) {
+      dateList.add(dateModelFromJson(element));
+      print(dateModelFromJson(element).date.toString());
+    });
   }
 }

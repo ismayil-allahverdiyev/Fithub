@@ -1,6 +1,6 @@
 import 'package:fithub/features/addRoutine/view/widgets/time_selector_widget.dart';
 import 'package:fithub/features/addRoutine/view_model/add_routine_view_model.dart';
-import 'package:fithub/features/commonWidgets/custom_text_field.dart';
+import 'package:fithub/features/commonWidgets/view/custom_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

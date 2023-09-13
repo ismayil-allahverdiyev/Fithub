@@ -14,7 +14,7 @@ class HomeViewModel extends ChangeNotifier {
 
   updateListOfDays() async {
     listOfDays.clear();
-    var items = await SQLHelper.getItems();
+    var items = await SQLHelper.getItems("plans");
     for (int i = 0; i < items.length; i++) {
       DayModel dayModel = DayModel.fromJson(items[i]);
       listOfDays.add(dayModel);
