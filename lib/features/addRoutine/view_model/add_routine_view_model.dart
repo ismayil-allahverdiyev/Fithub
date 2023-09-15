@@ -29,7 +29,7 @@ class AddRoutineViewModel extends ChangeNotifier {
 
   List<PlanModel> planList = [];
 
-  List<DateModel> dateList = [];
+  List<DateTime> dateList = [];
 
   TextEditingController planController = TextEditingController();
 
@@ -92,7 +92,7 @@ class AddRoutineViewModel extends ChangeNotifier {
   }
 
   addRoutine() async {
-    SQLHelper.createItemInPlans(
+    await SQLHelper.createItemInPlans(
       date: selectedDate.microsecondsSinceEpoch,
       mood: selectedMood,
       planList: [
@@ -105,10 +105,20 @@ class AddRoutineViewModel extends ChangeNotifier {
 
   getCalendarDate() async {
     var response = await SQLHelper.getItems("dates");
-    print(response[0]);
-    response.forEach((element) {
-      dateList.add(dateModelFromJson(element));
-      print(dateModelFromJson(element).date.toString());
-    });
+    if (response != null) {
+      dateList = [];
+      response.forEach((element) {
+        DateModel dateInfo = dateModelFromJson(element);
+        if (dateInfo.isFull == true) {
+          dateList.add(dateInfo.date);
+        }
+      });
+      notifyListeners();
+    }
+  }
+
+  void setDate(DateTime value) {
+    selectedDate = value;
+    notifyListeners();
   }
 }

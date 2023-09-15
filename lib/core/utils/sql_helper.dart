@@ -55,7 +55,6 @@ class SQLHelper {
     final id = await dbPlans.insert("plans", data,
         conflictAlgorithm: sql.ConflictAlgorithm.replace);
     await createItemInDates(date: date, isFull: true);
-    print("dates" + (await getItems("dates")).toString());
     return id;
   }
 

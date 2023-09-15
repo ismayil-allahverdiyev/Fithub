@@ -28,6 +28,34 @@ class AddRoutine extends StatelessWidget {
             scale: 2,
           ),
         ),
+        actions: [
+          Consumer<AddRoutineViewModel>(builder: (context, viewModel, _) {
+            print(viewModel.dateList.contains(DateTime(
+              DateTime.now().year,
+              DateTime.now().month,
+              DateTime.now().day,
+            )));
+            print(viewModel.dateList);
+            return viewModel.dateList.contains(DateTime(
+              DateTime.now().year,
+              DateTime.now().month,
+              DateTime.now().day,
+            ))
+                ? Center(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 32),
+                      child: Text(
+                        "Updating today...",
+                        style: Theme.of(context)
+                            .textTheme
+                            .bodyLarge!
+                            .copyWith(color: primaryColor),
+                      ),
+                    ),
+                  )
+                : Container();
+          }),
+        ],
       ),
       body: ListView(
         children: [
@@ -36,15 +64,15 @@ class AddRoutine extends StatelessWidget {
           const PlanListWidget(),
           const WaterIntakeWidget(),
           const SleepWidget(),
-          Consumer<HomeViewModel>(
-            builder: (context, viewModel, _) {
+          Consumer2<HomeViewModel, AddRoutineViewModel>(
+            builder: (context, homeViewModel, addRoutineViewModel, _) {
               return ElevatedButton(
                 onPressed: () {
                   Navigator.pop(context);
-                  Provider.of<AddRoutineViewModel>(context, listen: false)
-                      .addRoutine()
-                      .then((value) {
-                    viewModel.updateListOfDays();
+                  addRoutineViewModel.addRoutine().then((value) {
+                    homeViewModel.updateListOfDays().then((value) {
+                      addRoutineViewModel.getCalendarDate();
+                    });
                   });
                 },
                 child: const Text("Add"),
